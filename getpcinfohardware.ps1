@@ -1,6 +1,6 @@
 # first get current username and hostname to later save the file using it
 
-unblock-file -Path "\\arquivosdti.clickip.local\automacao_dados\pyinstall\getpcinfohardware.ps1" -WarningAction Ignore
+unblock-file -Path "pathtothisscript" -WarningAction Ignore
 
 $hostname = [System.Environment]::MachineName
 
@@ -50,11 +50,11 @@ $computersystemusername = Get-CimInstance -ClassName win32_computersystem | Sele
 
 Write-Host "Getting Ip settings info"
 
-$ipsettingsdhcpenabled = Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-Object {$_.IPEnabled} | Select-Object -ExpandProperty dhcpenabled | Out-String
+$ipsettingsdhcpenabled = Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-ObjectÂ {$_.IPEnabled} | Select-Object -ExpandProperty dhcpenabled | Out-String
 
 Write-Host "$ipsettingsdhcpenabled"
 
-$ipsettingsipaddress = Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-Object {$_.IPEnabled} | Select-Object -ExpandProperty ipaddress | Out-String
+$ipsettingsipaddress = Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where-ObjectÂ {$_.IPEnabled} | Select-Object -ExpandProperty ipaddress | Out-String
 
 Write-Host "$ipsettingsipaddress"
 
@@ -103,7 +103,7 @@ Write-Host "$totalstoragedata"
 
 # Get information about memory usage
 
-$memoryinfo = Get-WmiObject Win32_OperatingSystem
+$memoryinfoÂ = Get-WmiObject Win32_OperatingSystem
 
 # Calculate used memory (Total - Free) and divided by 10^6 (converting to GB)
 
@@ -138,26 +138,26 @@ Write-Host "$serialnumber"
 
 
 
-$outputFile = "\\arquivosdti.clickip.local\automacao_dados\coletadedadoshardware\collected-hardware-data-$hostname.csv"
+$outputFile = "\\Your-unc-path-here\collected-hardware-data-$hostname.csv"
 
 
 if ($currentUser -and $computerName -and $computersystemname -and $computersystemmodel -and $computersystemmemory -and $computersystemusername -and $ipsettingsdhcpenabled -and $ipsettingsipaddress -and $ipsettingsdnsdomain -and $ipsettingsdescription -and $totalstoragedata -and $serialnumber) {
 
-  # Write success message to file
+Â Â # Write success message to file
 
-  "O computador está ligado!" | Out-File -FilePath $outputFile -Encoding UTF8
+Â Â "O computador estÃ¡ ligado!" | Out-File -FilePath $outputFile -Encoding UTF8
 
-  Write-Host "System information saved to $outputFile! Data collection successful."
+Â Â Write-Host "System information saved to $outputFile! Data collection successful."
 
 
 
 } else {
 
-  # Write failure message to file
+Â Â # Write failure message to file
 
-  "O computador está desligado ou o usuário não tem acesso!" | Out-File -FilePath $outputFile -Encoding UTF8
+Â Â "O computador estÃ¡ desligado ou o usuÃ¡rio nÃ£o tem acesso!" | Out-File -FilePath $outputFile -Encoding UTF8
 
-  Write-Host "Failed to collect all necessary information. Check system and access."
+Â Â Write-Host "Failed to collect all necessary information. Check system and access."
 
 }
 
